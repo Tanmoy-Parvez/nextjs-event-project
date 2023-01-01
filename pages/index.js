@@ -14,10 +14,10 @@ const HomePage = (props) => {
 
 export default HomePage;
 
+
+// help to render this page at build time and also seo friendly;
 export const getStaticProps = async () => {
-
   const featuredEvents = await getFeaturedEvents()
-
   return {
     props: {
       events: featuredEvents
