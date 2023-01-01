@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import EventDetail from "../../components/EventDetail/EventDetail";
-import { getAllEvents, getEventById } from "../../helpers/api.util";
+import { getEventById, getFeaturedEvents } from "../../helpers/api.util";
 
 
 const EventDetailPage = ({ selectedEvent }) => {
@@ -24,7 +24,8 @@ export const getStaticProps = async (context) => {
     return {
         props: {
             selectedEvent: event
-        }
+        },
+        revalidate: 30
     }
 
 }
@@ -33,11 +34,11 @@ export const getStaticProps = async (context) => {
 // get all the paths that will be pre rendered
 export const getStaticPaths = async () => {
 
-    const allEvents = await getAllEvents()
+    const allEvents = await getFeaturedEvents()
     const paths = allEvents.map(event => ({ params: { eventsId: event.id } }))
 
     return {
         paths: paths,
-        fallback: false
+        fallback: true
     }
 }
